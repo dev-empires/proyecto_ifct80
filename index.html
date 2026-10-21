@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estación IoT de Entretenimiento: Video Club 3D</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(-45deg, #0f172a, #1e1b4b, #020617, #312e81, #0f172a);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: #f8fafc;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .slide-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 1000px;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(40px) scale(0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            box-sizing: border-box;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+            z-index: 10;
+        }
+
+        .slide.prev {
+            transform: translateY(-40px) scale(0.95);
+            opacity: 0;
+        }
+
+        /* Glassmorphism Classes */
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border-radius: 1.5rem;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-5px);
+        }
+
+        /* Progress bar */
+        #progress-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #38bdf8, #818cf8);
+            transition: width 0.4s ease;
+            z-index: 50;
+        }
+
+        /* Navigation Buttons */
+        .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            z-index: 100;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        #prev-btn { left: 1rem; }
+        #next-btn { right: 1rem; }
+
+        @media (max-width: 768px) {
+            .nav-btn { width: 40px; height: 40px; font-size: 1rem; }
+            #prev-btn { left: 0.5rem; }
+            #next-btn { right: 0.5rem; }
+            .content-wrapper { padding: 1rem; width: 100%; max-height: 90vh; overflow-y: auto; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="progress-bar" style="width: 25%"></div>
+
+    <button id="prev-btn" class="nav-btn"><i class="fas fa-chevron-left"></i></button>
+    <button id="next-btn" class="nav-btn"><i class="fas fa-chevron-right"></i></button>
+
+    <div class="slide-container">
+
+        <div class="slide active">
+            <div class="glass-panel max-w-5xl w-full p-8 md:p-12 text-center md:text-left flex flex-col md:flex-row gap-8 items-center">
+                <div class="flex-1">
+                    <span class="text-sky-400 font-bold tracking-widest uppercase text-sm mb-4 block">Proyecto IoT IFCT80 - Manuel Pires</span>
+                    <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6 text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400">
+                        Estación IoT:<br>Video Club 3D Ciberfísico
+                    </h1>
+                    <p class="text-lg text-slate-300 mb-8 leading-relaxed">
+                        Eliminamos la barrera entre el consumo de contenido digital y la automatización del entorno físico mediante una arquitectura inteligente y distribuida.
+                    </p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
+                        <div class="glass-card p-5 rounded-xl">
+                            <i class="fas fa-exclamation-triangle text-rose-400 text-2xl mb-3"></i>
+                            <h3 class="font-bold text-white mb-2">El Problema</h3>
+                            <p class="text-sm text-slate-400">La preparación de aperitivos interrumpe la inmersión del usuario, requiriendo intervención manual y constantes pausas.</p>
+                        </div>
+                        <div class="glass-card p-5 rounded-xl">
+                            <i class="fas fa-lightbulb text-yellow-400 text-2xl mb-3"></i>
+                            <h3 class="font-bold text-white mb-2">La Innovación</h3>
+                            <p class="text-sm text-slate-400"><i>Retrofitting</i> de electrodomésticos convencionales para dotarlos de control lógico, telemetría y seguridad de grado industrial.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="hidden md:flex flex-1 justify-center relative">
+                    <div class="absolute inset-0 bg-sky-500/20 blur-[100px] rounded-full"></div>
+                    <i class="fas fa-vr-cardboard text-[12rem] text-white/90 drop-shadow-2xl z-10 animate-pulse" style="animation-duration: 4s;"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="glass-panel max-w-6xl w-full p-8 md:p-10">
+                <div class="text-center mb-10">
+                    <h2 class="text-3xl md:text-5xl font-bold mb-4">Arquitectura Distribuida Cliente-Servidor</h2>
+                    <p class="text-slate-300 max-w-3xl mx-auto">El sistema separa el pesado renderizado gráfico de la actuación electrónica en tiempo real, maximizando el rendimiento y aislando las cargas de potencia.</p>
+                </div>
+
+                <div class="flex flex-col md:flex-row gap-6">
+                    <!-- Frontend Pi 500 -->
+                    <div class="flex-1 glass-card rounded-2xl p-6 border-t-4 border-t-sky-400 flex flex-col h-full">
+                        <div class="flex items-center gap-4 mb-4">
+                            <i class="fab fa-raspberry-pi text-4xl text-sky-400"></i>
+                            <div>
+                                <h3 class="text-2xl font-bold text-white">Frontend Multimedia</h3>
+                                <p class="text-sky-300 text-sm">Raspberry Pi 500 (Autologin)</p>
+                            </div>
+                        </div>
+                        <ul class="space-y-4 text-slate-300 flex-1">
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-desktop mt-1 text-slate-400"></i>
+                                <span>Ejecuta Chromium en <b>Modo Kiosco</b> (`--kiosk`), bloqueado visualmente en el videoclub BingeBrowse.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fab fa-js mt-1 text-yellow-400"></i>
+                                <span>Captura el evento "Play" mediante un <i>userscript</i> (Tampermonkey).</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-network-wired mt-1 text-emerald-400"></i>
+                                <span>Emite una petición HTTP POST por la red local sin retardo perceptible.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Backend Pi 3B+ -->
+                    <div class="flex-1 glass-card rounded-2xl p-6 border-t-4 border-t-rose-500 flex flex-col h-full">
+                        <div class="flex items-center gap-4 mb-4">
+                            <i class="fa-solid fa-microchip text-4xl text-rose-500"></i>
+                            <div>
+                                <h3 class="text-2xl font-bold text-white">Backend / Actuación</h3>
+                                <p class="text-rose-300 text-sm">Raspberry Pi 3B+ (Headless)</p>
+                            </div>
+                        </div>
+                        <ul class="space-y-4 text-slate-300 flex-1">
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-server mt-1 text-slate-400"></i>
+                                <span>Actúa como cerebro físico en la sombra. Recibe las órdenes vía API REST en Flask.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-bolt mt-1 text-yellow-400"></i>
+                                <span>Controla directamente los pines GPIO para manejar cargas de 230V AC y 5V DC.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-shield-alt mt-1 text-emerald-400"></i>
+                                <span>Procesa las interrupciones de seguridad (sensores) y registra la telemetría del sistema.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="glass-panel max-w-6xl w-full p-8 md:p-10">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl md:text-5xl font-bold mb-4">Control Ciberfísico y Seguridad</h2>
+                    <p class="text-slate-300">Dos módulos independientes gobernados con prioridad en la prevención de accidentes y el control de lazo cerrado.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Sólidos -->
+                    <div class="flex flex-col gap-4">
+                        <div class="bg-gradient-to-r from-orange-500/20 to-rose-500/20 p-6 rounded-2xl border border-orange-500/30">
+                            <div class="flex items-center justify-between mb-3">
+                                <h3 class="text-2xl font-bold text-white">Subsistema de Sólidos</h3>
+                                <i class="fas fa-fire text-orange-400 text-3xl"></i>
+                            </div>
+                            <p class="text-sm font-semibold text-orange-300 mb-4">Palomitero Orbegozo 1000W</p>
+                            <ul class="space-y-2 text-sm text-slate-200">
+                                <li><i class="fas fa-check text-green-400 mr-2"></i><b>Actuación de Potencia:</b> Relé optoacoplado aislando la fase de 230V del circuito de control (GPIO 17).</li>
+                                <li><i class="fas fa-check text-green-400 mr-2"></i><b>Diseño Mecánico:</b> Expulsión directa aerodinámica al recipiente, eliminando motores y piezas móviles propensas a atascos.</li>
+                                <li><i class="fas fa-check text-green-400 mr-2"></i><b>Lógica:</b> Temporizador asíncrono de ~180s con capacidad de interrupción.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Fluidos -->
+                    <div class="flex flex-col gap-4">
+                        <div class="bg-gradient-to-r from-sky-500/20 to-blue-500/20 p-6 rounded-2xl border border-sky-500/30">
+                            <div class="flex items-center justify-between mb-3">
+                                <h3 class="text-2xl font-bold text-white">Subsistema de Fluidos</h3>
+                                <i class="fas fa-tint text-sky-400 text-3xl"></i>
+                            </div>
+                            <p class="text-sm font-semibold text-sky-300 mb-4">Dispensador de sobremesa modificado (5V)</p>
+                            <ul class="space-y-2 text-sm text-slate-200">
+                                <li><i class="fas fa-bullseye text-sky-400 mr-2"></i><b>Lazo Cerrado:</b> Célula de carga + HX711 detecta la masa real (1g = 1ml), tarando automáticamente vasos de entre 15g y 60g.</li>
+                                <li><i class="fas fa-microchip text-sky-400 mr-2"></i><b>Conmutación:</b> Transistor MOSFET IRLZ44N con diodo flyback para proteger la placa de picos inductivos.</li>
+                                <li><i class="fas fa-biohazard text-rose-400 mr-2"></i><b>Fail-Safe (Emergencia):</b> Algoritmo de caída de peso brusca; corta la bomba en ms si el vaso es retirado prematuramente.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="glass-panel max-w-6xl w-full p-8 md:p-10">
+                <div class="flex items-center gap-4 mb-8">
+                    <div class="p-4 bg-indigo-500/20 rounded-xl border border-indigo-500/30">
+                        <i class="fas fa-database text-3xl text-indigo-400"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-3xl md:text-4xl font-bold">Software e Interfaz Multipunto</h2>
+                        <p class="text-slate-300">Auditoría, concurrencia y control soberano sobre el hardware.</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="glass-card p-6 rounded-xl relative overflow-hidden group">
+                        <div class="absolute -right-4 -top-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                            <i class="fab fa-python text-[8rem]"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-emerald-400 mb-3">API & Concurrencia</h3>
+                        <p class="text-sm text-slate-300 relative z-10">
+                            Servidor <b>Flask</b> multihilo en Python. Gestiona colas de tareas asíncronas para permitir la dispensación de fluidos y la cocción de sólidos simultáneamente, sin bloquear el hilo principal.
+                        </p>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-xl relative overflow-hidden group">
+                        <div class="absolute -right-4 -top-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                            <i class="fas fa-table text-[8rem]"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-sky-400 mb-3">Telemetría (SQLite)</h3>
+                        <p class="text-sm text-slate-300 relative z-10">
+                            Cada acción genera una transacción detallada (estado, timestamp, ml exactos, interrupciones). Los datos se visualizan en un dashboard local en red, idéntico a métricas de explotación comercial.
+                        </p>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-xl relative overflow-hidden group">
+                        <div class="absolute -right-4 -top-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                            <i class="fab fa-telegram-plane text-[8rem]"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-indigo-400 mb-3">Control Remoto</h3>
+                        <p class="text-sm text-slate-300 relative z-10">
+                            Soberanía total del usuario vía Bot de Telegram. Permite activar rutinas bajo demanda (`/palomitas`) y actúa como <b>Kill-Switch inalámbrico</b> (`/parar`) para abrir los relés en caso de alerta física.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const slides = document.querySelectorAll('.slide');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const progressBar = document.getElementById('progress-bar');
+            let currentSlide = 0;
+            const totalSlides = slides.length;
+
+            function updateSlide() {
+                slides.forEach((slide, index) => {
+                    slide.classList.remove('active', 'prev');
+                    if (index === currentSlide) {
+                        slide.classList.add('active');
+                    } else if (index < currentSlide) {
+                        slide.classList.add('prev');
+                    }
+                });
+
+                // Update Progress bar
+                const progress = ((currentSlide + 1) / totalSlides) * 100;
+                progressBar.style.width = `${progress}%`;
+
+                // Update Button states
+                prevBtn.style.opacity = currentSlide === 0 ? '0.3' : '1';
+                prevBtn.style.pointerEvents = currentSlide === 0 ? 'none' : 'auto';
+                
+                nextBtn.style.opacity = currentSlide === totalSlides - 1 ? '0.3' : '1';
+                nextBtn.style.pointerEvents = currentSlide === totalSlides - 1 ? 'none' : 'auto';
+            }
+
+            function goToNextSlide() {
+                if (currentSlide < totalSlides - 1) {
+                    currentSlide++;
+                    updateSlide();
+                }
+            }
+
+            function goToPrevSlide() {
+                if (currentSlide > 0) {
+                    currentSlide--;
+                    updateSlide();
+                }
+            }
+
+            // Click Events
+            nextBtn.addEventListener('click', goToNextSlide);
+            prevBtn.addEventListener('click', goToPrevSlide);
+
+            // Keyboard Arrow Events
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight' || e.key === 'Space') goToNextSlide();
+                if (e.key === 'ArrowLeft') goToPrevSlide();
+            });
+
+            // Touch Swipe Events for Mobile Devices
+            let touchStartX = 0;
+            let touchEndX = 0;
+            const minSwipeDistance = 50;
+
+            document.addEventListener('touchstart', e => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, { passive: true });
+
+            document.addEventListener('touchend', e => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            }, { passive: true });
+
+            function handleSwipe() {
+                const swipeDistance = touchStartX - touchEndX;
+                if (swipeDistance > minSwipeDistance) {
+                    // Swiped left -> next slide
+                    goToNextSlide();
+                } else if (swipeDistance < -minSwipeDistance) {
+                    // Swiped right -> prev slide
+                    goToPrevSlide();
+                }
+            }
+
+            // Initialization
+            updateSlide();
+        });
+    </script>
+</body>
+</html>
