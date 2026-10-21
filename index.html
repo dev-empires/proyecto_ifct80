@@ -72,7 +72,6 @@
             opacity: 0;
         }
 
-        /* Glassmorphism Classes */
         .glass-panel {
             background: rgba(15, 23, 42, 0.4);
             backdrop-filter: blur(16px);
@@ -80,6 +79,22 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
             border-radius: 1.5rem;
+            max-height: 85vh; /* Limit height for small screens */
+            overflow-y: auto; /* Enable scroll if content is too tall */
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+        }
+
+        /* Custom Scrollbar for Webkit (Chrome/Safari/Edge) */
+        .glass-panel::-webkit-scrollbar {
+            width: 6px;
+        }
+        .glass-panel::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .glass-panel::-webkit-scrollbar-thumb {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
         }
 
         .glass-card {
@@ -93,7 +108,6 @@
             transform: translateY(-5px);
         }
 
-        /* Progress bar */
         #progress-bar {
             position: absolute;
             bottom: 0;
@@ -104,7 +118,6 @@
             z-index: 50;
         }
 
-        /* Navigation Buttons */
         .nav-btn {
             position: absolute;
             top: 50%;
@@ -137,7 +150,6 @@
             .nav-btn { width: 40px; height: 40px; font-size: 1rem; }
             #prev-btn { left: 0.5rem; }
             #next-btn { right: 0.5rem; }
-            .content-wrapper { padding: 1rem; width: 100%; max-height: 90vh; overflow-y: auto; }
         }
     </style>
 </head>
@@ -145,27 +157,28 @@
 
     <div id="progress-bar" style="width: 25%"></div>
 
-    <button id="prev-btn" class="nav-btn"><i class="fas fa-chevron-left"></i></button>
-    <button id="next-btn" class="nav-btn"><i class="fas fa-chevron-right"></i></button>
+    <button id="prev-btn" class="nav-btn" aria-label="Anterior"><i class="fas fa-chevron-left"></i></button>
+    <button id="next-btn" class="nav-btn" aria-label="Siguiente"><i class="fas fa-chevron-right"></i></button>
 
     <div class="slide-container">
 
+        <!-- SLIDE 1: Concepto -->
         <div class="slide active">
-            <div class="glass-panel max-w-5xl w-full p-8 md:p-12 text-center md:text-left flex flex-col md:flex-row gap-8 items-center">
-                <div class="flex-1">
+            <div class="glass-panel max-w-5xl w-full p-6 md:p-12 text-center md:text-left flex flex-col md:flex-row gap-8 items-center">
+                <div class="flex-1 w-full">
                     <span class="text-sky-400 font-bold tracking-widest uppercase text-sm mb-4 block">Proyecto IoT IFCT80 - Manuel Pires</span>
-                    <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6 text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400">
+                    <h1 class="text-3xl md:text-6xl font-extrabold leading-tight mb-6 text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400">
                         Estación IoT:<br>Video Club 3D Ciberfísico
                     </h1>
-                    <p class="text-lg text-slate-300 mb-8 leading-relaxed">
-                        Eliminamos la barrera entre el consumo de contenido digital y la automatización del entorno físico mediante una arquitectura inteligente y distribuida.
+                    <p class="text-base md:text-lg text-slate-300 mb-8 leading-relaxed">
+                        Eliminamos la barrera entre el consumo digital y la automatización física. El usuario explora sus películas en BingeBrowse (un videoclub virtual retro en 3D interactivo) y, al darle al "Play", el entorno físico reacciona sirviendo sus aperitivos y bebidas automáticamente.
                     </p>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left">
                         <div class="glass-card p-5 rounded-xl">
                             <i class="fas fa-exclamation-triangle text-rose-400 text-2xl mb-3"></i>
                             <h3 class="font-bold text-white mb-2">El Problema</h3>
-                            <p class="text-sm text-slate-400">La preparación de aperitivos interrumpe la inmersión del usuario, requiriendo intervención manual y constantes pausas.</p>
+                            <p class="text-sm text-slate-400">La preparación de aperitivos rompe la inmersión de la experiencia multimedia, exigiendo tareas manuales y pausas constantes.</p>
                         </div>
                         <div class="glass-card p-5 rounded-xl">
                             <i class="fas fa-lightbulb text-yellow-400 text-2xl mb-3"></i>
@@ -181,60 +194,59 @@
             </div>
         </div>
 
+        <!-- SLIDE 2: Arquitectura -->
         <div class="slide">
-            <div class="glass-panel max-w-6xl w-full p-8 md:p-10">
-                <div class="text-center mb-10">
-                    <h2 class="text-3xl md:text-5xl font-bold mb-4">Arquitectura Distribuida Cliente-Servidor</h2>
-                    <p class="text-slate-300 max-w-3xl mx-auto">El sistema separa el pesado renderizado gráfico de la actuación electrónica en tiempo real, maximizando el rendimiento y aislando las cargas de potencia.</p>
+            <div class="glass-panel max-w-6xl w-full p-6 md:p-10">
+                <div class="text-center mb-8 md:mb-10">
+                    <h2 class="text-2xl md:text-5xl font-bold mb-4">Arquitectura Distribuida Cliente-Servidor</h2>
+                    <p class="text-slate-300 max-w-3xl mx-auto text-sm md:text-base">El sistema separa el pesado renderizado gráfico 3D de la actuación electrónica en tiempo real, maximizando el rendimiento y aislando las cargas de potencia.</p>
                 </div>
 
                 <div class="flex flex-col md:flex-row gap-6">
-                    <!-- Frontend Pi 500 -->
-                    <div class="flex-1 glass-card rounded-2xl p-6 border-t-4 border-t-sky-400 flex flex-col h-full">
+                    <div class="w-full md:flex-1 glass-card rounded-2xl p-6 border-t-4 border-t-sky-400 flex flex-col">
                         <div class="flex items-center gap-4 mb-4">
                             <i class="fab fa-raspberry-pi text-4xl text-sky-400"></i>
                             <div>
-                                <h3 class="text-2xl font-bold text-white">Frontend Multimedia</h3>
-                                <p class="text-sky-300 text-sm">Raspberry Pi 500 (Autologin)</p>
+                                <h3 class="text-xl md:text-2xl font-bold text-white">Frontend Multimedia</h3>
+                                <p class="text-sky-300 text-xs md:text-sm">Raspberry Pi 500 (Autologin)</p>
                             </div>
                         </div>
-                        <ul class="space-y-4 text-slate-300 flex-1">
+                        <ul class="space-y-4 text-sm md:text-base text-slate-300 flex-1">
                             <li class="flex items-start gap-3">
                                 <i class="fas fa-desktop mt-1 text-slate-400"></i>
-                                <span>Ejecuta Chromium en <b>Modo Kiosco</b> (`--kiosk`), bloqueado visualmente en el videoclub BingeBrowse.</span>
+                                <span>Ejecuta Chromium en <b>Modo Kiosco</b> (`--kiosk`), sumergiendo al usuario en el videoclub BingeBrowse a pantalla completa.</span>
                             </li>
                             <li class="flex items-start gap-3">
                                 <i class="fab fa-js mt-1 text-yellow-400"></i>
-                                <span>Captura el evento "Play" mediante un <i>userscript</i> (Tampermonkey).</span>
+                                <span>Un <i>userscript</i> (Tampermonkey) detecta de forma invisible cuándo se inicia la reproducción.</span>
                             </li>
                             <li class="flex items-start gap-3">
                                 <i class="fas fa-network-wired mt-1 text-emerald-400"></i>
-                                <span>Emite una petición HTTP POST por la red local sin retardo perceptible.</span>
+                                <span>Emite la orden de actuación mediante una petición HTTP POST por la red local sin retardo.</span>
                             </li>
                         </ul>
                     </div>
 
-                    <!-- Backend Pi 3B+ -->
-                    <div class="flex-1 glass-card rounded-2xl p-6 border-t-4 border-t-rose-500 flex flex-col h-full">
+                    <div class="w-full md:flex-1 glass-card rounded-2xl p-6 border-t-4 border-t-rose-500 flex flex-col">
                         <div class="flex items-center gap-4 mb-4">
                             <i class="fa-solid fa-microchip text-4xl text-rose-500"></i>
                             <div>
-                                <h3 class="text-2xl font-bold text-white">Backend / Actuación</h3>
-                                <p class="text-rose-300 text-sm">Raspberry Pi 3B+ (Headless)</p>
+                                <h3 class="text-xl md:text-2xl font-bold text-white">Backend / Actuación</h3>
+                                <p class="text-rose-300 text-xs md:text-sm">Raspberry Pi 3B+ (Headless)</p>
                             </div>
                         </div>
-                        <ul class="space-y-4 text-slate-300 flex-1">
+                        <ul class="space-y-4 text-sm md:text-base text-slate-300 flex-1">
                             <li class="flex items-start gap-3">
                                 <i class="fas fa-server mt-1 text-slate-400"></i>
                                 <span>Actúa como cerebro físico en la sombra. Recibe las órdenes vía API REST en Flask.</span>
                             </li>
                             <li class="flex items-start gap-3">
                                 <i class="fas fa-bolt mt-1 text-yellow-400"></i>
-                                <span>Controla directamente los pines GPIO para manejar cargas de 230V AC y 5V DC.</span>
+                                <span>Controla directamente los pines GPIO para manejar las cargas de 230V AC y 5V DC.</span>
                             </li>
                             <li class="flex items-start gap-3">
                                 <i class="fas fa-shield-alt mt-1 text-emerald-400"></i>
-                                <span>Procesa las interrupciones de seguridad (sensores) y registra la telemetría del sistema.</span>
+                                <span>Vigila las interrupciones de seguridad de los sensores y registra la telemetría del sistema.</span>
                             </li>
                         </ul>
                     </div>
@@ -242,42 +254,41 @@
             </div>
         </div>
 
+        <!-- SLIDE 3: Control Físico -->
         <div class="slide">
-            <div class="glass-panel max-w-6xl w-full p-8 md:p-10">
+            <div class="glass-panel max-w-6xl w-full p-6 md:p-10">
                 <div class="text-center mb-8">
-                    <h2 class="text-3xl md:text-5xl font-bold mb-4">Control Ciberfísico y Seguridad</h2>
-                    <p class="text-slate-300">Dos módulos independientes gobernados con prioridad en la prevención de accidentes y el control de lazo cerrado.</p>
+                    <h2 class="text-2xl md:text-5xl font-bold mb-4">Control Ciberfísico y Seguridad</h2>
+                    <p class="text-slate-300 text-sm md:text-base">Dos módulos independientes gobernados con prioridad en la prevención de accidentes y el control de lazo cerrado.</p>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <!-- Sólidos -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
                     <div class="flex flex-col gap-4">
-                        <div class="bg-gradient-to-r from-orange-500/20 to-rose-500/20 p-6 rounded-2xl border border-orange-500/30">
+                        <div class="bg-gradient-to-r from-orange-500/20 to-rose-500/20 p-5 md:p-6 rounded-2xl border border-orange-500/30">
                             <div class="flex items-center justify-between mb-3">
-                                <h3 class="text-2xl font-bold text-white">Subsistema de Sólidos</h3>
-                                <i class="fas fa-fire text-orange-400 text-3xl"></i>
+                                <h3 class="text-xl md:text-2xl font-bold text-white">Subsistema de Sólidos</h3>
+                                <i class="fas fa-fire text-orange-400 text-2xl md:text-3xl"></i>
                             </div>
-                            <p class="text-sm font-semibold text-orange-300 mb-4">Palomitero Orbegozo 1000W</p>
-                            <ul class="space-y-2 text-sm text-slate-200">
-                                <li><i class="fas fa-check text-green-400 mr-2"></i><b>Actuación de Potencia:</b> Relé optoacoplado aislando la fase de 230V del circuito de control (GPIO 17).</li>
-                                <li><i class="fas fa-check text-green-400 mr-2"></i><b>Diseño Mecánico:</b> Expulsión directa aerodinámica al recipiente, eliminando motores y piezas móviles propensas a atascos.</li>
-                                <li><i class="fas fa-check text-green-400 mr-2"></i><b>Lógica:</b> Temporizador asíncrono de ~180s con capacidad de interrupción.</li>
+                            <p class="text-xs md:text-sm font-semibold text-orange-300 mb-4">Palomitero Orbegozo 1000W</p>
+                            <ul class="space-y-2 text-xs md:text-sm text-slate-200">
+                                <li><i class="fas fa-check text-green-400 mr-2"></i><b>Actuación Segura:</b> Relé optoacoplado que aísla la fase de 230V del circuito de control lógico (GPIO 17).</li>
+                                <li><i class="fas fa-check text-green-400 mr-2"></i><b>Diseño Mecánico:</b> Expulsión directa aerodinámica al bol, eliminando la necesidad de motores que puedan atascarse.</li>
+                                <li><i class="fas fa-check text-green-400 mr-2"></i><b>Lógica:</b> Temporizador asíncrono de cocción (~180s) con capacidad de interrupción manual inmediata.</li>
                             </ul>
                         </div>
                     </div>
 
-                    <!-- Fluidos -->
                     <div class="flex flex-col gap-4">
-                        <div class="bg-gradient-to-r from-sky-500/20 to-blue-500/20 p-6 rounded-2xl border border-sky-500/30">
+                        <div class="bg-gradient-to-r from-sky-500/20 to-blue-500/20 p-5 md:p-6 rounded-2xl border border-sky-500/30">
                             <div class="flex items-center justify-between mb-3">
-                                <h3 class="text-2xl font-bold text-white">Subsistema de Fluidos</h3>
-                                <i class="fas fa-tint text-sky-400 text-3xl"></i>
+                                <h3 class="text-xl md:text-2xl font-bold text-white">Subsistema de Fluidos</h3>
+                                <i class="fas fa-tint text-sky-400 text-2xl md:text-3xl"></i>
                             </div>
-                            <p class="text-sm font-semibold text-sky-300 mb-4">Dispensador de sobremesa modificado (5V)</p>
-                            <ul class="space-y-2 text-sm text-slate-200">
-                                <li><i class="fas fa-bullseye text-sky-400 mr-2"></i><b>Lazo Cerrado:</b> Célula de carga + HX711 detecta la masa real (1g = 1ml), tarando automáticamente vasos de entre 15g y 60g.</li>
-                                <li><i class="fas fa-microchip text-sky-400 mr-2"></i><b>Conmutación:</b> Transistor MOSFET IRLZ44N con diodo flyback para proteger la placa de picos inductivos.</li>
-                                <li><i class="fas fa-biohazard text-rose-400 mr-2"></i><b>Fail-Safe (Emergencia):</b> Algoritmo de caída de peso brusca; corta la bomba en ms si el vaso es retirado prematuramente.</li>
+                            <p class="text-xs md:text-sm font-semibold text-sky-300 mb-4">Dispensador de sobremesa modificado (5V)</p>
+                            <ul class="space-y-2 text-xs md:text-sm text-slate-200">
+                                <li><i class="fas fa-bullseye text-sky-400 mr-2"></i><b>Lazo Cerrado:</b> Célula de carga + HX711 que detecta la masa real (1g = 1ml), tarando automáticamente cualquier vaso.</li>
+                                <li><i class="fas fa-microchip text-sky-400 mr-2"></i><b>Conmutación:</b> Transistor MOSFET IRLZ44N equipado con diodo flyback para proteger la placa de picos inductivos.</li>
+                                <li><i class="fas fa-biohazard text-rose-400 mr-2"></i><b>Fail-Safe:</b> Algoritmo vigilante; si el vaso es retirado prematuramente, corta la bomba en milisegundos para evitar derrames.</li>
                             </ul>
                         </div>
                     </div>
@@ -285,52 +296,104 @@
             </div>
         </div>
 
+        <!-- SLIDE 4: Software -->
         <div class="slide">
-            <div class="glass-panel max-w-6xl w-full p-8 md:p-10">
-                <div class="flex items-center gap-4 mb-8">
-                    <div class="p-4 bg-indigo-500/20 rounded-xl border border-indigo-500/30">
+            <div class="glass-panel max-w-6xl w-full p-6 md:p-10">
+                <div class="flex flex-col md:flex-row items-center gap-4 mb-8 text-center md:text-left">
+                    <div class="p-4 bg-indigo-500/20 rounded-xl border border-indigo-500/30 hidden md:block">
                         <i class="fas fa-database text-3xl text-indigo-400"></i>
                     </div>
                     <div>
-                        <h2 class="text-3xl md:text-4xl font-bold">Software e Interfaz Multipunto</h2>
-                        <p class="text-slate-300">Auditoría, concurrencia y control soberano sobre el hardware.</p>
+                        <h2 class="text-2xl md:text-4xl font-bold">Software e Interfaz Multipunto</h2>
+                        <p class="text-slate-300 text-sm md:text-base mt-2 md:mt-0">Auditoría, concurrencia y control soberano sobre el hardware.</p>
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="glass-card p-6 rounded-xl relative overflow-hidden group">
+                    <div class="glass-card p-5 md:p-6 rounded-xl relative overflow-hidden group">
                         <div class="absolute -right-4 -top-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                            <i class="fab fa-python text-[8rem]"></i>
+                            <i class="fab fa-python text-[6rem] md:text-[8rem]"></i>
                         </div>
-                        <h3 class="text-xl font-bold text-emerald-400 mb-3">API & Concurrencia</h3>
-                        <p class="text-sm text-slate-300 relative z-10">
-                            Servidor <b>Flask</b> multihilo en Python. Gestiona colas de tareas asíncronas para permitir la dispensación de fluidos y la cocción de sólidos simultáneamente, sin bloquear el hilo principal.
+                        <h3 class="text-lg md:text-xl font-bold text-emerald-400 mb-2 md:mb-3">API & Concurrencia</h3>
+                        <p class="text-xs md:text-sm text-slate-300 relative z-10">
+                            Servidor <b>Flask</b> multihilo en Python. Gestiona colas de tareas asíncronas para permitir la dispensación de líquido y la cocción de sólidos de forma simultánea, sin congelar el hilo principal.
                         </p>
                     </div>
 
-                    <div class="glass-card p-6 rounded-xl relative overflow-hidden group">
+                    <div class="glass-card p-5 md:p-6 rounded-xl relative overflow-hidden group">
                         <div class="absolute -right-4 -top-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                            <i class="fas fa-table text-[8rem]"></i>
+                            <i class="fas fa-table text-[6rem] md:text-[8rem]"></i>
                         </div>
-                        <h3 class="text-xl font-bold text-sky-400 mb-3">Telemetría (SQLite)</h3>
-                        <p class="text-sm text-slate-300 relative z-10">
-                            Cada acción genera una transacción detallada (estado, timestamp, ml exactos, interrupciones). Los datos se visualizan en un dashboard local en red, idéntico a métricas de explotación comercial.
+                        <h3 class="text-lg md:text-xl font-bold text-sky-400 mb-2 md:mb-3">Telemetría (SQLite)</h3>
+                        <p class="text-xs md:text-sm text-slate-300 relative z-10">
+                            Cada acción genera una transacción registrada de forma persistente. Los datos se pueden consultar en un dashboard local en red, de forma idéntica a las métricas de explotación comercial.
                         </p>
                     </div>
 
-                    <div class="glass-card p-6 rounded-xl relative overflow-hidden group">
+                    <div class="glass-card p-5 md:p-6 rounded-xl relative overflow-hidden group">
                         <div class="absolute -right-4 -top-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                            <i class="fab fa-telegram-plane text-[8rem]"></i>
+                            <i class="fas fa-microphone-alt text-[6rem] md:text-[8rem]"></i>
                         </div>
-                        <h3 class="text-xl font-bold text-indigo-400 mb-3">Control Remoto</h3>
-                        <p class="text-sm text-slate-300 relative z-10">
-                            Soberanía total del usuario vía Bot de Telegram. Permite activar rutinas bajo demanda (`/palomitas`) y actúa como <b>Kill-Switch inalámbrico</b> (`/parar`) para abrir los relés en caso de alerta física.
+                        <h3 class="text-lg md:text-xl font-bold text-indigo-400 mb-2 md:mb-3">Control Multicanal</h3>
+                        <p class="text-xs md:text-sm text-slate-300 relative z-10">
+                            Control remoto mediante un Bot de Telegram integrado. Permite activar rutinas bajo demanda (`/palomitas`) y funciona como un Kill-Switch de emergencia (`/parar`) para mayor seguridad. Control remoto de voz <i>offline</i> <b>(Vosk)</b>, garantizando respuesta sin usar la nube.
                         </p>
                     </div>
                 </div>
             </div>
         </div>
 
+    </div>
+
+    <!-- Botón Flotante Componentes -->
+    <button id="btn-componentes" class="fixed bottom-6 right-6 md:bottom-10 md:right-10 bg-indigo-600/90 hover:bg-indigo-500 backdrop-blur-md text-white py-3 px-5 rounded-full shadow-[0_0_20px_rgba(79,70,229,0.4)] z-[110] flex items-center gap-2 transition-all border border-indigo-400/30 font-semibold group cursor-pointer">
+        <i class="fas fa-microchip group-hover:rotate-12 transition-transform"></i>
+        <span class="hidden sm:inline">Ver Materiales</span>
+    </button>
+
+    <!-- Modal Componentes -->
+    <div id="modal-componentes" class="fixed inset-0 z-[120] bg-slate-900/80 backdrop-blur-sm flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300 p-4">
+        <div class="glass-panel max-w-4xl w-full p-6 md:p-8 relative transform scale-95 transition-transform duration-300" id="modal-content">
+            <button id="close-modal" class="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors text-2xl cursor-pointer z-10">
+                <i class="fas fa-times"></i>
+            </button>
+            <h2 class="text-2xl md:text-3xl font-bold mb-6 text-white flex items-center gap-3">
+                <i class="fas fa-tools text-indigo-400"></i> Hardware y Componentes
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 text-sm text-slate-200">
+                <div class="bg-slate-800/50 p-4 rounded-xl border border-slate-700/50">
+                    <h4 class="font-bold text-sky-400 mb-2 border-b border-sky-400/30 pb-2 flex items-center gap-2"><i class="fas fa-network-wired"></i> Núcleo Informático</h4>
+                    <ul class="list-disc pl-5 space-y-1 text-xs md:text-sm">
+                        <li>Raspberry Pi 500 (Frontend BingeBrowse)</li>
+                        <li>Raspberry Pi 3B+ (Backend IoT Headless)</li>
+                        <li>Micrófono USB mini (Vosk offline)</li>
+                    </ul>
+                </div>
+                <div class="bg-slate-800/50 p-4 rounded-xl border border-slate-700/50">
+                    <h4 class="font-bold text-orange-400 mb-2 border-b border-orange-400/30 pb-2 flex items-center gap-2"><i class="fas fa-plug"></i> Electrodomésticos</h4>
+                    <ul class="list-disc pl-5 space-y-1 text-xs md:text-sm">
+                        <li>Palomitero Orbegozo PA 4300 (1000W)</li>
+                        <li>Dispensador Padwa Lifestyle (modificado)</li>
+                    </ul>
+                </div>
+                <div class="bg-slate-800/50 p-4 rounded-xl border border-slate-700/50">
+                    <h4 class="font-bold text-emerald-400 mb-2 border-b border-emerald-400/30 pb-2 flex items-center gap-2"><i class="fas fa-bolt"></i> Potencia y Control</h4>
+                    <ul class="list-disc pl-5 space-y-1 text-xs md:text-sm">
+                        <li>Relé optoacoplado 5V (10A/250VAC)</li>
+                        <li>MOSFET Canal N (IRLZ44N) + Diodo Flyback</li>
+                        <li>Fuente externa 5V/2A para motores</li>
+                    </ul>
+                </div>
+                <div class="bg-slate-800/50 p-4 rounded-xl border border-slate-700/50">
+                    <h4 class="font-bold text-yellow-400 mb-2 border-b border-yellow-400/30 pb-2 flex items-center gap-2"><i class="fas fa-microchip"></i> Sensores y Miscelánea</h4>
+                    <ul class="list-disc pl-5 space-y-1 text-xs md:text-sm">
+                        <li>Célula de carga (1kg/5kg) + Módulo HX711</li>
+                        <li>Caja estanca aislamiento 230V</li>
+                        <li>Resistencias, placa perforada y cableado</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -342,6 +405,7 @@
             let currentSlide = 0;
             const totalSlides = slides.length;
 
+            // Manejo de Diapositivas
             function updateSlide() {
                 slides.forEach((slide, index) => {
                     slide.classList.remove('active', 'prev');
@@ -378,17 +442,18 @@
                 }
             }
 
-            // Click Events
             nextBtn.addEventListener('click', goToNextSlide);
             prevBtn.addEventListener('click', goToPrevSlide);
 
-            // Keyboard Arrow Events
             document.addEventListener('keydown', (e) => {
+                // Prevent sliding if modal is open
+                if (document.getElementById('modal-componentes').classList.contains('opacity-100')) return;
+                
                 if (e.key === 'ArrowRight' || e.key === 'Space') goToNextSlide();
                 if (e.key === 'ArrowLeft') goToPrevSlide();
             });
 
-            // Touch Swipe Events for Mobile Devices
+            // Soporte para gestos táctiles (Swipe)
             let touchStartX = 0;
             let touchEndX = 0;
             const minSwipeDistance = 50;
@@ -403,17 +468,45 @@
             }, { passive: true });
 
             function handleSwipe() {
+                // Evitar swipe si el modal está abierto
+                if (document.getElementById('modal-componentes').classList.contains('opacity-100')) return;
+
                 const swipeDistance = touchStartX - touchEndX;
                 if (swipeDistance > minSwipeDistance) {
-                    // Swiped left -> next slide
                     goToNextSlide();
                 } else if (swipeDistance < -minSwipeDistance) {
-                    // Swiped right -> prev slide
                     goToPrevSlide();
                 }
             }
 
-            // Initialization
+            // Lógica del Modal de Componentes
+            const btnComponentes = document.getElementById('btn-componentes');
+            const modalComponentes = document.getElementById('modal-componentes');
+            const closeModal = document.getElementById('close-modal');
+            const modalContent = document.getElementById('modal-content');
+
+            function toggleModal() {
+                const isOpen = modalComponentes.classList.contains('opacity-100');
+                if (isOpen) {
+                    modalComponentes.classList.remove('opacity-100', 'pointer-events-auto');
+                    modalComponentes.classList.add('opacity-0', 'pointer-events-none');
+                    modalContent.classList.remove('scale-100');
+                    modalContent.classList.add('scale-95');
+                } else {
+                    modalComponentes.classList.remove('opacity-0', 'pointer-events-none');
+                    modalComponentes.classList.add('opacity-100', 'pointer-events-auto');
+                    modalContent.classList.remove('scale-95');
+                    modalContent.classList.add('scale-100');
+                }
+            }
+
+            btnComponentes.addEventListener('click', toggleModal);
+            closeModal.addEventListener('click', toggleModal);
+            modalComponentes.addEventListener('click', (e) => {
+                if(e.target === modalComponentes) toggleModal();
+            });
+
+            // Inicializar la presentación
             updateSlide();
         });
     </script>
